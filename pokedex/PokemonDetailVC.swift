@@ -23,13 +23,44 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var currentEvolImage: UIImageView!
     @IBOutlet weak var nextEvolImage: UIImageView!
+    @IBOutlet weak var nextEvoLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        pokemon.downloadPokemonDetail {
+            
+            self.updateUI()
+            
+        }
+        
+    }
+    
+    func updateUI(){
+        
         nameLabel.text = pokemon.name.capitalized
         pokeImage.image = UIImage(named: "\(pokemon.pokedexId)")
         currentEvolImage.image = UIImage(named: "\(pokemon.pokedexId)")
+        wightLabel.text = "\(pokemon.weight)"
+        heightLabel.text = "\(pokemon.height)"
+        attackLabel.text = "\(pokemon.attack)"
+        defenseLabel.text = "\(pokemon.defense)"
+        typeLabel.text = pokemon.type
+        descLabel.text = pokemon.desc
+        pokedexIdLabel.text = "\(pokemon.pokedexId)"
+        
+        if pokemon.nextEvolutionId == 0{
+            
+            nextEvoLabel.text = "No evolutions available"
+            nextEvolImage.isHidden = true
+            
+        } else{
+            
+            nextEvoLabel.text = pokemon.nextEvolutionTxt
+            nextEvolImage.image = UIImage(named: "\(pokemon.nextEvolutionId)")
+            nextEvolImage.isHidden = false
+            
+        }
         
     }
     
